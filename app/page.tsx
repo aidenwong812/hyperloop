@@ -18,7 +18,7 @@ export default function Home() {
       <InputCurrency style="Get" setCurrency={setGetValue} currency={getValue} tokenStyle={getStyle} setTokenStyle={setGetStyle}/>
       <div className=" flex flex-col w-full gap-1">
         <article>Recipient Wallet</article>
-        <input className="w-full rounded-md outline-none bg-transparent border-[1px] border-[#dde2ea] py-2" placeholder="Enter the ETH payout address" onChange={(e) =>{setAddress(e.target.value)}}/>
+        <input className="w-full rounded-md outline-none bg-transparent border-[1px] border-[#dde2ea] p-2" placeholder="Enter the ETH payout address" onChange={(e) =>{setAddress(e.target.value)}}/>
       </div>
       <button className="w-full rounded-full border-[1px] border-[#dde2ea] py-2 bg-radial-gradient from-transparent to-[#9c5ef8]">Confirm</button>
     </div>
