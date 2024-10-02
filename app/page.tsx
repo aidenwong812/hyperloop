@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import InputCurrency from "./component/Input";
-import { createExchangeTransaction, getAvailableCurrencies, getEstimatedExchangeAmount, getMinimalExchangeAmount, getTransactionStatus } from "./services/change-now";
+import { createExchangeTransaction, getEstimatedExchangeAmount, getMinimalExchangeAmount, getTransactionStatus } from "./services/change-now";
 
 export default function Home() {
   const [inputAmount, setInputAmount] = useState<any>();
