@@ -4,8 +4,8 @@ const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage }: { setTok
     const tokens = [
         { title: "BTC", name: "Bitcoin", image: "https://content-api.changenow.io/uploads/btc_1_527dc9ec3c.svg" },
         { title: "ETH", name: "Ethereum", image: "https://content-api.changenow.io/uploads/eth_f4ebb54ec0.svg" },
-        { title: "Base", name: "Ethereum", image: "https://content-api.changenow.io/uploads/ethbase_42ce14857a.svg" },
-        { title: "BSC", name: "Ethereum", image: "https://content-api.changenow.io/uploads/ethbsc_ef444521c5.svg" },
+        { title: "ETH", name: "Ethereum(Base)", image: "https://content-api.changenow.io/uploads/ethbase_42ce14857a.svg" },
+        { title: "ETH", name: "Ethereum(binanse Smart Chain)", image: "https://content-api.changenow.io/uploads/ethbsc_ef444521c5.svg" },
         { title: "TRX", name: "Tron", image: "https://content-api.changenow.io/uploads/trx_f14430166e.svg" },
         { title: "SOL", name: "Solana", image: "https://content-api.changenow.io/uploads/sol_3b3f795997.svg" },
         { title: "Matic", name: "Polygon", image: "https://content-api.changenow.io/uploads/maticerc20_3ea50caa97.svg" },

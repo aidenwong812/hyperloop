@@ -12,7 +12,7 @@ export default function Home() {
   const [inputCurrency, setInputCurrency] = useState<string>("BTC");
   const [outCurrency, setOutCurrency] = useState<string>("ETH");
   const [inputError, setInputError] = useState<string>("");
-  const [inputMinimumAmount, setInputminimumAmount] = useState<number>(0.0001);
+  const [inputMinimumAmount, setInputminimumAmount] = useState<number>(0.000105);
   // Helper function to convert currency
   const ApiCurrencyconvertCurrency = (currency: string) => {
     switch (currency) {
@@ -62,16 +62,18 @@ export default function Home() {
 
   const handleTransaction = async () => {
     try {
-      let transaction = await createExchangeTransaction(inputCurrency, outCurrency, inputAmount!, address);
-      let transactionStatus = await getTransactionStatus(transaction.id);
+      let transaction = await createExchangeTransaction(inputCurrency, outCurrency, inputAmount, address);
+      let transactionStatus :any = await getTransactionStatus(transaction.id);
 
       if (transactionStatus.status === 'error') {
-        toast.error('Transaction failed.');
+        console.log(transactionStatus)
+        toast.error(transaction?.message);
       } else {
         toast.success('Transaction completed successfully.');
       }
-    } catch (error) {
-      toast.error('An error occurred while creating the transaction.');
+    } catch (error: any) {
+      console.log(error.response)
+      toast.error(error.response);
     }
   };
 

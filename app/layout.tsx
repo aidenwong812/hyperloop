@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-[#6f39eb] justify-center items-center">
       <body className={inter.className}>
-        <ToastContainer className=" text-[10px]"/>
+        <ToastContainer/>
         <div className=" bg-[#6f39eb] w-full flex flex-col justify-center h-screen items-center">
           <div className={inter.className}>{children}</div>          
         </div>
