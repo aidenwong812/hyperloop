@@ -14,8 +14,8 @@ const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage }: { setTok
     return (<>
         <div className="fixed inset-0 bg-black opacity-30" onClick={() => setIsModalShow(false)} />
         <div className={`absolute shadow-lg rounded-md flex flex-col bg-[#7e4bf7] 
-        sm:right-[20%] sm:justify-start justify-center sm:w-[342px] sm:top-[50%] sm:left-[50%] sm:-translate-x-[50%] sm:-translate-y-[50%]
-        z-10 w-full right-0 top-0 overflow-auto`}>
+        sm:right-[20%] sm:justify-start justify-center sm:h-[500px] sm:w-[342px] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]
+        z-10 w-full h-screen overflow-auto`}>
             <div className="flex justify-between px-4 py-4">
                 <article>Select a currency</article>
                 <button onClick={() => setIsModalShow(false)}>&times;</button>
