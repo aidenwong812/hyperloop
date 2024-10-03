@@ -21,8 +21,10 @@ export default function Home() {
       case 'BSC': return "ethbsc";
       case 'TRX': return "trx";
       case 'SOL': return "sol";
-      case 'Matic': return "matic";
-      case 'Sui': return "sui";
+      case 'MATIC': return "matic";
+      case 'SUI': return "sui";
+      case 'Pepe': return 'pepe';
+      case "MOG": return 'mog';
       default: return "btc";
     }
   };
@@ -69,7 +71,7 @@ export default function Home() {
         console.log(transactionStatus)
         toast.error(transaction?.message);
       } else {
-        toast.success('Transaction completed successfully.');
+        toast.success('The transaction has been completed successfully. ');
       }
     } catch (error: any) {
       console.log(error.response)
