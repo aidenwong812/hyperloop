@@ -1,4 +1,5 @@
-'use client'
+"use client"
+
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -10,6 +11,9 @@ import Footer from "./component/Footer";
 
 export default function Home() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { setTransactionInfo, setUserId, userId } = useGlobalContext();
+  
   const [inputAmount, setInputAmount] = useState<any>();
   const [outAmount, setOutAmount] = useState<any>();
   const [address, setAddress] = useState<string>("");
@@ -18,8 +22,28 @@ export default function Home() {
   const [inputError, setInputError] = useState<string>("");
   const [inputMinimumAmount, setInputminimumAmount] = useState<number>(0.000105);
   const [id, setId] = useState<any>();
-  const { setTransactionInfo, setUserId, userId } = useGlobalContext();
-  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('id') !== undefined) setId(searchParams.get('id'));
+  }, [])
+  
+  useEffect(() => {
+    if (id) {
+      setUserId(id);
+      axios.post('/api/user', { userId })
+        .then((res: any) => { console.log(res); })
+        .catch((err: any) => { console.log(err) })
+    }
+  }, [id])
+  // Effect hooks to trigger fetch based on amount or currency change
+  useEffect(() => {
+    fetchAmount();
+  }, [inputAmount]);
+
+  useEffect(() => {
+    fetchCurrency();
+    fetchAmount();
+  }, [inputCurrency, outCurrency]);
 
   const ApiCurrencyconvertCurrency = (currency: string) => {
     switch (currency) {
@@ -35,6 +59,7 @@ export default function Home() {
       default: return "btc";
     }
   };
+  
   const fetchCurrency = async () => {
     const apiOutCurrency = ApiCurrencyconvertCurrency(outCurrency);
     const apiInputCurrency = ApiCurrencyconvertCurrency(inputCurrency);
@@ -53,27 +78,6 @@ export default function Home() {
       setInputError(`Send currency amount is very small. Minimum currency amount is ${inputMinimumAmount}`);
     }
   };
-
-  useEffect(() => {
-    if (searchParams.get('id') !== undefined) setId(searchParams.get('id'));
-  }, [])
-  useEffect(() => {
-    if (id) {
-      setUserId(id);
-      axios.post('/api/user', { userId })
-        .then((res: any) => { console.log(res); })
-        .catch((err: any) => { console.log(err) })
-    }
-  }, [id])
-  // Effect hooks to trigger fetch based on amount or currency change
-  useEffect(() => {
-    fetchAmount();
-  }, [inputAmount]);
-
-  useEffect(() => {
-    fetchCurrency();
-    fetchAmount();
-  }, [inputCurrency, outCurrency]);
 
   const handleTransaction = async () => {
     try {
