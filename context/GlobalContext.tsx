@@ -38,7 +38,7 @@ export const GlobalProvider: React.FC<GlobalProvideProps> = ({ children }) => {
         directedAmount:0 
     });
 
-    const [userId, setUserId] = useState<string>("");
+    const [userId, setUserId] = useState<string>("3434375");
 
     return (
         <GlobalContext.Provider value={{transactionInfo, setTransactionInfo, userId, setUserId}}>

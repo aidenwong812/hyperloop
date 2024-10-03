@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import InputCurrency from "./component/Input";
 import { createExchangeTransaction, getEstimatedExchangeAmount, getMinimalExchangeAmount, getTransactionStatus } from "./services/change-now";
@@ -10,7 +10,6 @@ import Footer from "./component/Footer";
 
 export default function Home() {
   const router = useRouter();
-  const pathnname = usePathname();
   const [inputAmount, setInputAmount] = useState<any>();
   const [outAmount, setOutAmount] = useState<any>();
   const [address, setAddress] = useState<string>("");
@@ -18,10 +17,10 @@ export default function Home() {
   const [outCurrency, setOutCurrency] = useState<string>("ETH");
   const [inputError, setInputError] = useState<string>("");
   const [inputMinimumAmount, setInputminimumAmount] = useState<number>(0.000105);
-  const {setTransactionInfo, setUserId} = useGlobalContext();  
-  const userId = pathnname.split("=")[1];
-  setUserId(userId);
-  // Helper function to convert currency
+  const [id, setId] = useState<any>();
+  const { setTransactionInfo, setUserId, userId } = useGlobalContext();
+  const searchParams = useSearchParams();
+
   const ApiCurrencyconvertCurrency = (currency: string) => {
     switch (currency) {
       case 'ETH': return "eth";
@@ -36,74 +35,74 @@ export default function Home() {
       default: return "btc";
     }
   };
-  const fetchCurrency = async () =>{    
+  const fetchCurrency = async () => {
     const apiOutCurrency = ApiCurrencyconvertCurrency(outCurrency);
-    const apiInputCurrency = ApiCurrencyconvertCurrency(inputCurrency);    
+    const apiInputCurrency = ApiCurrencyconvertCurrency(inputCurrency);
     const tempInputMinimumAmount = await getMinimalExchangeAmount(apiInputCurrency, apiOutCurrency);
     setInputminimumAmount(tempInputMinimumAmount);
   }
 
-  const fetchAmount = async () => {    
+  const fetchAmount = async () => {
     const apiOutCurrency = ApiCurrencyconvertCurrency(outCurrency);
-    const apiInputCurrency = ApiCurrencyconvertCurrency(inputCurrency);   
+    const apiInputCurrency = ApiCurrencyconvertCurrency(inputCurrency);
     if (inputAmount && inputAmount > inputMinimumAmount) {
-      setInputError(""); 
+      setInputError("");
       const tempOutAmount = await getEstimatedExchangeAmount(apiInputCurrency, apiOutCurrency, inputAmount);
       setOutAmount(tempOutAmount.estimatedAmount);
     } else {
       setInputError(`Send currency amount is very small. Minimum currency amount is ${inputMinimumAmount}`);
-    }   
+    }
   };
 
+  useEffect(() => {
+    if (searchParams.get('id') !== undefined) setId(searchParams.get('id'));
+  }, [])
+  useEffect(() => {
+    if (id) {
+      setUserId(id);
+      axios.post('/api/user', { userId })
+        .then((res: any) => { console.log(res); })
+        .catch((err: any) => { console.log(err) })
+    }
+  }, [id])
   // Effect hooks to trigger fetch based on amount or currency change
   useEffect(() => {
-      fetchAmount();
+    fetchAmount();
   }, [inputAmount]);
 
   useEffect(() => {
     fetchCurrency();
     fetchAmount();
-  }, [outCurrency]);
-
-  useEffect(() => {
-    fetchCurrency();
-    fetchAmount();
-  }, [inputCurrency]);
+  }, [inputCurrency, outCurrency]);
 
   const handleTransaction = async () => {
     try {
       let transaction = await createExchangeTransaction(inputCurrency, outCurrency, inputAmount, address);
-      let transactionStatus :any = await getTransactionStatus(transaction.id);
+      let transactionStatus: any = await getTransactionStatus(transaction.id);
 
       if (transactionStatus.status === 'error') {
-        console.log(transactionStatus)
         toast.error(transaction?.message);
       } else {
         toast.success('The transaction has been completed successfully.');
         setTransactionInfo({
-          payinAddress: transaction.payinAddress, 
+          payinAddress: transaction.payinAddress,
           payoutAddress: transaction.payoutAddress,
-          fromCurrency:transaction.fromCurrency,
-          toCurrency:transaction.toCurrency,
-          amount:transaction.amount,
-          directedAmount:transaction.directedAmount
+          fromCurrency: transaction.fromCurrency,
+          toCurrency: transaction.toCurrency,
+          amount: transaction.amount,
+          directedAmount: transaction.directedAmount
         });
         const data = {
           userId: userId,
-          payoutAddress: transaction.payoutAddress,
-          fromCurrency: transaction.fromCurrency,
-          toCurrensy: transaction.toCurrency,
-          amount: transaction.amount,
-          directedAmount: transaction.directedAmount
+          transactionId: btoa(transaction.id).replace(/=+$/, ''),
         };
-        axios.post("/api/transactions/confirm", data)
-        .then((res: any) => {console.log(res);})
-        .catch((err: any) => {console.log(err)})
+        axios.post("/api/transactions/confirm", { data })
+          .then((res: any) => { console.log(res); })
+          .catch((err: any) => { console.log(err) })
         router.push("/confirm");
       }
 
     } catch (error: any) {
-      console.log(error.response)
       toast.error(error.response);
     }
   };
@@ -118,8 +117,8 @@ export default function Home() {
           currency={inputAmount}
           tokenStyle={inputCurrency}
           setTokenStyle={setInputCurrency}
-        /> 
-        <div className={`bg-[#ffffff] text-red-500 text-[14px] -mt-2 ${inputError? "px-2" :"p-0"} rounded-b-md`}>
+        />
+        <div className={`bg-[#ffffff] text-red-500 text-[14px] -mt-2 ${inputError ? "px-2" : "p-0"} rounded-b-md`}>
           {inputError}
         </div>
       </div>
@@ -148,7 +147,7 @@ export default function Home() {
       >
         Confirm
       </button>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

@@ -1,35 +1,50 @@
-import { db } from "../db";
 import { NextRequest, NextResponse } from "next/server";
-
-const Transaction = db.Transaction;
+import prisma from "../../database";
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId, payoutAddress, fromCurrency, toCurrensy, amount, directedAmount } = await req.json();
-    const newTransaction = new Transaction({
-      userId: userId,
-      payoutAddress: payoutAddress,
-      fromCurrency: fromCurrency,
-      toCurrensy: toCurrensy,
-      amount: amount,
-      directedAmount: directedAmount
-    })
-    newTransaction.save();
+    const requestData = await req.json();
+    
+    // Check if the required fields are present in the request body
+    if (!requestData.data || !requestData.data.userId || !requestData.data.transactionId) {
+      return NextResponse.json(
+        { message: "Missing required fields: userId and transactionId" },
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+          status: 400,
+        }
+      );
+    }
+
+    const {userId, transactionId} = requestData.data;    
+    // Create the transaction
+    await prisma.transaction.create({
+      data: {
+        userId: userId,
+        transactionId: transactionId
+      }
+    });
+
     return NextResponse.json(
-      { message: "Transaction has been Succesefully." },
+      { message: "Transaction has been successfully created." },
       {
         headers: {
           "content-type": "application/json",
         },
-        status: 200,
-      })
+        status: 201, // Changed to 201 Created
+      }
+    );
+
   } catch (err) {
+    console.error("Error creating transaction:", err);
     return NextResponse.json(
       {
-        message: "Transaction is failed",
+        message: "Failed to create transaction",
         success: false,
+        error: err,
       },
-
       {
         headers: {
           "content-type": "application/json",

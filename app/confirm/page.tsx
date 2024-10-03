@@ -3,7 +3,7 @@ import { useGlobalContext } from "../../context/GlobalContext";
 import Footer from "../component/Footer";
 
 const Confirm = () => {
-    const { transactionInfo } = useGlobalContext();
+    const { transactionInfo } = useGlobalContext();    
     return (
         <>
             <div className="flex flex-col gap-2 text-white text-md px-6 -mt-28">
