@@ -1,11 +1,16 @@
-'use client';
-
+'use client'
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useRouter, usePathname } from "next/navigation";
+import axios from "axios";
 import InputCurrency from "./component/Input";
 import { createExchangeTransaction, getEstimatedExchangeAmount, getMinimalExchangeAmount, getTransactionStatus } from "./services/change-now";
+import { useGlobalContext } from "../context/GlobalContext";
+import Footer from "./component/Footer";
 
 export default function Home() {
+  const router = useRouter();
+  const pathnname = usePathname();
   const [inputAmount, setInputAmount] = useState<any>();
   const [outAmount, setOutAmount] = useState<any>();
   const [address, setAddress] = useState<string>("");
@@ -13,6 +18,9 @@ export default function Home() {
   const [outCurrency, setOutCurrency] = useState<string>("ETH");
   const [inputError, setInputError] = useState<string>("");
   const [inputMinimumAmount, setInputminimumAmount] = useState<number>(0.000105);
+  const {setTransactionInfo, setUserId} = useGlobalContext();  
+  const userId = pathnname.split("=")[1];
+  setUserId(userId);
   // Helper function to convert currency
   const ApiCurrencyconvertCurrency = (currency: string) => {
     switch (currency) {
@@ -71,8 +79,29 @@ export default function Home() {
         console.log(transactionStatus)
         toast.error(transaction?.message);
       } else {
-        toast.success('The transaction has been completed successfully. ');
+        toast.success('The transaction has been completed successfully.');
+        setTransactionInfo({
+          payinAddress: transaction.payinAddress, 
+          payoutAddress: transaction.payoutAddress,
+          fromCurrency:transaction.fromCurrency,
+          toCurrency:transaction.toCurrency,
+          amount:transaction.amount,
+          directedAmount:transaction.directedAmount
+        });
+        const data = {
+          userId: userId,
+          payoutAddress: transaction.payoutAddress,
+          fromCurrency: transaction.fromCurrency,
+          toCurrensy: transaction.toCurrency,
+          amount: transaction.amount,
+          directedAmount: transaction.directedAmount
+        };
+        axios.post("/api/transactions/confirm", data)
+        .then((res: any) => {console.log(res);})
+        .catch((err: any) => {console.log(err)})
+        router.push("/confirm");
       }
+
     } catch (error: any) {
       console.log(error.response)
       toast.error(error.response);
@@ -80,8 +109,8 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full text-white flex flex-col justify-center items-center -mt-4 sm:px-[70px] gap-8 p-4">
-      <article className="text-lg">Exchange Crypto</article>
+    <div className="w-full text-white flex flex-col justify-center items-center -mt-20 sm:px-[70px] gap-8 p-4">
+      <article className="text-2xl">Exchange Crypto</article>
       <div className="w-full">
         <InputCurrency
           style="Send"
@@ -90,7 +119,7 @@ export default function Home() {
           tokenStyle={inputCurrency}
           setTokenStyle={setInputCurrency}
         /> 
-        <div className={`bg-[#ffffff] text-red-500 text-[10px] -mt-2 ${inputError? "p-2" :"p-0"} rounded-b-md`}>
+        <div className={`bg-[#ffffff] text-red-500 text-[14px] -mt-2 ${inputError? "px-2" :"p-0"} rounded-b-md`}>
           {inputError}
         </div>
       </div>
@@ -114,11 +143,12 @@ export default function Home() {
       </div>
 
       <button
-        className="w-full rounded-full border-[1px] border-[#dde2ea] py-2 bg-radial-gradient from-transparent to-[#9c5ef8]"
+        className="w-full rounded-full border-[1px] border-[#dde2ea] py-2 bg-radial-gradient from-transparent to-[#9c5ef8] hover:-translate-y-1 duration-300"
         onClick={handleTransaction}
       >
         Confirm
       </button>
+      <Footer/>
     </div>
   );
 }
