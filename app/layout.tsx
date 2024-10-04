@@ -19,7 +19,7 @@ export default function RootLayout({
         <Suspense>
           <GlobalProvider>
             <ToastContainer />
-            <div className=" bg-[#6f39eb] w-full flex flex-col justify-center h-screen items-center relative">
+            <div className=" bg-[#6f39eb] w-full flex flex-col justify-center min-h-[600px] h-screen items-center relative overflow-auto">
               <div className={inter.className}>{children}</div>
             </div>
           </GlobalProvider>
