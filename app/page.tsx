@@ -87,7 +87,7 @@ export default function Home() {
       if (transactionStatus.status === 'error') {
         toast.error(transaction?.message);
       } else {
-        toast.success('The transaction has been completed successfully.');
+        toast.success('The transaction created.');
         setTransactionInfo({
           payinAddress: transaction.payinAddress,
           payoutAddress: transaction.payoutAddress,
@@ -122,7 +122,7 @@ export default function Home() {
           tokenStyle={inputCurrency}
           setTokenStyle={setInputCurrency}
         />
-        <div className={`bg-[#ffffff] text-red-500 text-[14px] -mt-2 ${inputError ? "px-2" : "p-0"} rounded-b-md`}>
+        <div className={`bg-[#ffffff] text-red-500 text-[14px] -mt-2 ${inputError ? "px-2" : "p-0"} rounded-b-md duration-200`}>
           {inputError}
         </div>
       </div>
