@@ -75,7 +75,7 @@ export default function Home() {
       const tempOutAmount = await getEstimatedExchangeAmount(apiInputCurrency, apiOutCurrency, inputAmount);
       setOutAmount(tempOutAmount.estimatedAmount);
     } else {
-      setInputError(`Send currency amount is very small. Minimum currency amount is ${inputMinimumAmount}`);
+      setInputError(`Send currency amount is very small. Minimum currency amount is ${inputMinimumAmount}.`);
     }
   };
 
@@ -121,10 +121,8 @@ export default function Home() {
           currency={inputAmount}
           tokenStyle={inputCurrency}
           setTokenStyle={setInputCurrency}
-        />
-        <div className={`bg-[#ffffff] text-red-500 text-[14px] -mt-2 ${inputError ? "px-2" : "p-0"} rounded-b-md duration-200`}>
-          {inputError}
-        </div>
+          inputError = {inputError}
+        />        
       </div>
       <div className="w-full">
         <InputCurrency
@@ -133,6 +131,7 @@ export default function Home() {
           currency={outAmount}
           tokenStyle={outCurrency}
           setTokenStyle={setOutCurrency}
+          inputError = {""}
         />
       </div>
 
