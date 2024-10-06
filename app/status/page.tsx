@@ -25,7 +25,6 @@ const Status = () => {
         axios.post("/api/transactions/reset", { transactions })
             .then((res) => {
                 setIsloading(false);
-                console.log(res.data);
                 handleStatus();
             })
             .catch((err) => console.log(err));

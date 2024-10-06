@@ -24,7 +24,6 @@ export async function POST(req: NextRequest) {
   
       const transactions = await prisma.transaction.findMany({ where: { userId: userId } });
       for (const transaction of transactions) {
-        console.log(transaction.status);
         if (transaction.status === 'waiting') {
           const transactionStatus = await getTransactionStatus(atob(transaction.transactionId));
           checkTransactionStatus(transactionStatus, userId); // Pass the userId here

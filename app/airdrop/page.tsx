@@ -12,7 +12,6 @@ const Airdrop = () => {
         axios.post("/api/transactions/airdrop", { userId })
             .then((res) => {
                 setIsloading(false);
-                console.log(res.data);
                 setScore(res.data.data);
             })
             .catch((err) => console.log(err));
