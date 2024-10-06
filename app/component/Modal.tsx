@@ -12,11 +12,12 @@ const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage }: { setTok
         { title: "SUI", name: "Sui", image: "https://content-api.changenow.io/uploads/sui_6d4e2efb11.svg" },
         { title: "MOG", name: "Mog Coin", image: "https://content-api.changenow.io/uploads/mog_457505a2dd.svg" },
         { title: "Pepe", name: "pepe", image: "https://content-api.changenow.io/uploads/pepe_ebbbab2660.svg" },
+        { title: "AVAX", name: "avax", image: "https://content-api.changenow.io/uploads/avaxs_470dc56248.svg" }
     ]
     return (<>
         <div className="fixed inset-0 bg-black opacity-30" onClick={() => setIsModalShow(false)} />
-        <div className={`absolute shadow-lg rounded-md flex flex-col bg-[#7e4bf7] 
-        sm:right-[20%] sm:justify-start justify-center sm:h-[500px] sm:w-[342px] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]
+        <div className={`absolute shadow-lg rounded-md flex flex-col bg-[#7e4bf7] top-0
+        sm:right-[20%] sm:justify-start justify-center sm:h-[500px] sm:w-[342px] sm:top-[50%] left-[50%] -translate-x-[50%] sm:-translate-y-[50%]
         z-10 w-full`}>
             <div className="flex justify-between px-4 py-4 sticky top-0 bg-[#8c60f5] rounded-t-md text-2xl">
                 <article>Select a currency</article>
@@ -25,10 +26,10 @@ const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage }: { setTok
             <div className="hover:overflow-auto overflow-hidden w-full">
                 {tokens.map((token) => {
                     // For "Send" style, exclude "Sui" token
-                    if (style === "Send" && token.title === "Sui") return null;
+                    if (style === "Send" && token.title === "SUI") return null;
 
                     // For "Get" style, exclude "Matic" token
-                    if (style === "Get" && token.title === "Matic") return null;
+                    if (style === "Get" && token.title === "MATIC") return null;
 
                     // Common rendering for both "Send" and "Get" styles
                     return (

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client'
 import { getTransactionStatus } from '@/app/services/change-now';
+import { checkTransactionStatus } from '@/app/services/status.feature';
 
 const prisma = new PrismaClient()
 
