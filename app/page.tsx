@@ -56,6 +56,7 @@ export default function Home() {
       case 'SUI': return "sui";
       case 'Pepe': return 'pepe';
       case "MOG": return 'mog';
+      case "AVAX": return "avax";
       default: return "btc";
     }
   };
