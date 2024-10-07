@@ -23,7 +23,7 @@ const Airdrop = () => {
                 <div className="animate-spin rounded-full border-[14px] border-white h-16 w-16 border-dotted"></div>
                     :
                     <div className="text-white text-2xl text-center p-3 font-bold">
-                        You've received {score} points for airdrop!
+                       { `You've received ${score} points for airdrop!`}
                     </div>
             }
             <Footer />
