@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { SlRefresh } from "react-icons/sl";
+import { LuRefreshCw } from "react-icons/lu";
 import Footer from "../component/Footer";
 import { useGlobalContext } from "@/context/GlobalContext";
 
@@ -40,7 +40,7 @@ const Status = () => {
                     disabled={isLoading}
                 >
                     <div className="flex gap-2 justify-center items-center">
-                        <SlRefresh className={`${isLoading ? "animate-spin" : " animate-none"} `} />
+                        <LuRefreshCw className={`${isLoading ? "animate-spin" : " animate-none"} `} />
                         Reset
                     </div>
                 </button>
