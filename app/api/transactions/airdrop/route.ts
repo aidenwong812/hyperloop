@@ -6,7 +6,7 @@ import { checkTransactionStatus } from "@/app/services/status.feature";
 export async function POST(req: NextRequest) {
     try {
       const { userId } = await req.json();
-      
+
       if (!userId) {
         return NextResponse.json(
           {
@@ -26,15 +26,17 @@ export async function POST(req: NextRequest) {
       for (const transaction of transactions) {
         if (transaction.status === 'waiting') {
           const transactionStatus = await getTransactionStatus(atob(transaction.transactionId));
+          if(transactionStatus.status === "finished")
           checkTransactionStatus(transactionStatus, userId); // Pass the userId here
         }
       }
   
-      const user = await prisma.user.findUnique({ where: { id: userId } });
+      const user :any = await prisma.user.findUnique({ where: { id: userId } });
+      const airdrop = user.airdrop;
       return NextResponse.json(
         {
           message: "Transaction status checked.",
-          data: user?.airdrop,
+          data: airdrop,
         },
         {
           status: 200,
@@ -58,3 +60,5 @@ export async function POST(req: NextRequest) {
       );
     }
   }
+
+  

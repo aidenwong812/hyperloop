@@ -52,14 +52,14 @@ export const checkTransactionStatus = async (
     transactionStatus.expectedReceiveAmount
   );
   const user = await prisma.user.findUnique({ where: { id: userId } })
+  console.log(airdropPoint);
+  console.log(user);
 
   if (user) {
-    prisma.user.update(
-      {
-        where: { id: userId },
-        data: { airdrop: user.airdrop + airdropPoint },
-      }
-    );
+    await prisma.user.update({
+      where: { id: userId },
+      data: { airdrop: user.airdrop + airdropPoint },
+    });
   } else {
     await prisma.user.create({
       data: {
