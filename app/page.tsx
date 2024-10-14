@@ -57,6 +57,9 @@ export default function Home() {
       case 'Pepe': return 'pepe';
       case "MOG": return 'mog';
       case "AVAX": return "avax";
+      case "USDC(ETH)": return "usdc";
+      case "USDC(SOLANA)": return "usdc";
+      case "USDC(TRX)": return "usdc";
       default: return "btc";
     }
   };

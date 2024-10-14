@@ -12,7 +12,11 @@ const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage }: { setTok
         { title: "SUI", name: "Sui", image: "https://content-api.changenow.io/uploads/sui_6d4e2efb11.svg" },
         { title: "MOG", name: "Mog Coin", image: "https://content-api.changenow.io/uploads/mog_457505a2dd.svg" },
         { title: "Pepe", name: "pepe", image: "https://content-api.changenow.io/uploads/pepe_ebbbab2660.svg" },
-        { title: "AVAX", name: "avax", image: "https://content-api.changenow.io/uploads/avaxs_470dc56248.svg" }
+        { title: "AVAX", name: "avax", image: "https://content-api.changenow.io/uploads/avaxs_470dc56248.svg" },
+        { title: "USDC(ETH)", name: "USD Coin (Ethereum)", image: "https://content-api.changenow.io/uploads/usdcerc20_acd5759c8c.svg" },
+        { title: "USDC(SOLANA)", name: "USD Coin (Solana)", image: "https://content-api.changenow.io/uploads/usdcsol_9415198300.svg" },
+        { title: "USDC(TRX)", name: "USD Coin (Tron)", image: "https://content-api.changenow.io/uploads/usdctrc20_d13d6907e1.svg" },
+
     ]
     return (<>
         <div className="fixed inset-0 bg-black opacity-30" onClick={() => setIsModalShow(false)} />

@@ -70,7 +70,7 @@ export const createFixedRateExchangeTransaction = async (
   recipientAddress: string,
 ): Promise<FixedRateExchangeTransaction> => {
   const res = await axios.post(
-    `${V1_BASE_URL}/transactions/fixed-rate/${apiKey}`,
+    `${V1_BASE_URL}/  /fixed-rate/${apiKey}`,
     {
       from: inputCurrency,
       to: outputCurrency,

@@ -1,17 +1,24 @@
 import { useState } from "react";
 import { RiArrowDownSFill } from "react-icons/ri";
 import Modal from "./Modal";
-const TokenButtons = ({ tokenStyle, setTokenStyle, style, tempTokenImage }: { tokenStyle: string, style:string, setTokenStyle: any, tempTokenImage:string }) => {
+const TokenButtons = ({ tokenStyle, setTokenStyle, style, tempTokenImage }: { tokenStyle: string, style: string, setTokenStyle: any, tempTokenImage: string }) => {
     const [isModalShow, setIsModalShow] = useState(false);
     const [tokenImage, setTokenImage] = useState(tempTokenImage);
     return (
         <>
             <div className="flex gap-1 items-center w-[30%]" onClick={() => { setIsModalShow(true) }}>
-                <img src={tokenImage} alt="tokenimage"/>
-                {tokenStyle}
-                <RiArrowDownSFill className="size-9"/>
+                <img src={tokenImage} alt="tokenimage" />
+                {
+                    tokenStyle.length > 5 ?
+                        <div className="flex flex-col justify-center items-center text-xs">
+                            USDC
+                            <p>{tokenStyle.slice(4)}</p>
+                        </div>
+                        : tokenStyle
+                }
+                <RiArrowDownSFill className="size-9" />
             </div>
-            {isModalShow && <Modal setTokenStyle={setTokenStyle} style={style} setIsModalShow={setIsModalShow} setTokenImage={setTokenImage}/>}
+            {isModalShow && <Modal setTokenStyle={setTokenStyle} style={style} setIsModalShow={setIsModalShow} setTokenImage={setTokenImage} />}
         </>
     )
 }
