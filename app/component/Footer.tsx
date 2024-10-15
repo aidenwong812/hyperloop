@@ -3,8 +3,8 @@ import { useRouter, usePathname } from "next/navigation";
 import { TbTransactionBitcoin } from "react-icons/tb";
 import { HiStatusOnline } from "react-icons/hi";
 export default function Footer() {
-    const pathname = usePathname();
-    const router = useRouter();
+  const pathname = usePathname();
+  const router = useRouter();
   return (
     <div className="flex w-full justify-between text-white px-8 bottom-10 absolute max-w-[500px] left-[50%] -translate-x-[50%]">
       <div className={`flex flex-col w-20  cursor-pointer items-center shadow-lg justify-center py-2 rounded-xl ${pathname === '/' ? 'bg-white bg-opacity-40 border-white' : 'bg-white bg-opacity-10 '}`} onClick={() => router.push('/')}>
