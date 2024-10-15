@@ -1,6 +1,6 @@
 
 
-const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage}: { setTokenStyle: any, style: string, setIsModalShow: any, setTokenImage: any}) => {
+const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage }: { setTokenStyle: any, style: string, setIsModalShow: any, setTokenImage: any }) => {
     const tokens = [
         { title: "BTC", name: "Bitcoin", image: "https://content-api.changenow.io/uploads/btc_1_527dc9ec3c.svg" },
         { title: "ETH", name: "Ethereum", image: "https://content-api.changenow.io/uploads/eth_f4ebb54ec0.svg" },
@@ -34,7 +34,7 @@ const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage}: { setToke
                 {tokens.map((token) => {
                     // For "Send" style, exclude "Sui" token
                     if (style === "Send" && token.title === "SUI") return null;
-                    if(style === "Get" && token.title === "USDC(TRX)") return null;
+                    if (style === "Get" && token.title === "USDC(TRX)") return null;
                     // For "Get" style, exclude "Matic" token
                     if (style === "Get" && token.title === "MATIC") return null;
 

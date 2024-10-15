@@ -2,8 +2,8 @@
 import TokenButtons from "./Tokens";
 
 const InputCurrency = (
-    { style, setCurrency, currency, tokenStyle, setTokenStyle, inputError}:
-        { style: string, setCurrency: any, currency: number, tokenStyle: string, setTokenStyle: any, inputError: string}
+    { style, setCurrency, currency, tokenStyle, setTokenStyle, inputError }:
+        { style: string, setCurrency: any, currency: number, tokenStyle: string, setTokenStyle: any, inputError: string }
 ) => {
     const bitcoinImage = "https://content-api.changenow.io/uploads/btc_1_527dc9ec3c.svg";
     const ehtereumImage = "https://content-api.changenow.io/uploads/eth_f4ebb54ec0.svg";

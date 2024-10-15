@@ -13,7 +13,7 @@ export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setTransactionInfo, setUserId, userId } = useGlobalContext();
-  
+
   const [inputAmount, setInputAmount] = useState<any>();
   const [outAmount, setOutAmount] = useState<any>();
   const [address, setAddress] = useState<string>("");
@@ -26,7 +26,7 @@ export default function Home() {
   useEffect(() => {
     if (searchParams.get('id') !== undefined) setId(searchParams.get('id'));
   }, [])
-  
+
   useEffect(() => {
     if (id) {
       setUserId(id);
@@ -66,7 +66,7 @@ export default function Home() {
       default: return "btc";
     }
   };
-  
+
   const fetchCurrency = async () => {
     const apiOutCurrency = ApiCurrencyconvertCurrency(outCurrency);
     const apiInputCurrency = ApiCurrencyconvertCurrency(inputCurrency);
@@ -128,8 +128,8 @@ export default function Home() {
           currency={inputAmount}
           tokenStyle={inputCurrency}
           setTokenStyle={setInputCurrency}
-          inputError = {inputError}
-        />        
+          inputError={inputError}
+        />
       </div>
       <div className="w-full">
         <InputCurrency
@@ -138,7 +138,7 @@ export default function Home() {
           currency={outAmount}
           tokenStyle={outCurrency}
           setTokenStyle={setOutCurrency}
-          inputError = {""}
+          inputError={""}
         />
       </div>
 
