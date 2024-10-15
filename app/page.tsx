@@ -58,8 +58,11 @@ export default function Home() {
       case "MOG": return 'mog';
       case "AVAX": return "avax";
       case "USDC(ETH)": return "usdc";
-      case "USDC(SOLANA)": return "usdc";
-      case "USDC(TRX)": return "usdc";
+      case "USDC(SOLANA)": return "usdcsol";
+      case "USDC(TRX)": return "usdctrc20";
+      case "USDT(ETH)": return "usdterc20";
+      case "USDT(SOLANA)": return "usdtsol";
+      case "USDT(TRX)": return "usdttrc20";
       default: return "btc";
     }
   };

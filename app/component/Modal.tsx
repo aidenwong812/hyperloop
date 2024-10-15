@@ -1,6 +1,6 @@
 
 
-const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage }: { setTokenStyle: any, style: string, setIsModalShow: any, setTokenImage: any }) => {
+const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage}: { setTokenStyle: any, style: string, setIsModalShow: any, setTokenImage: any}) => {
     const tokens = [
         { title: "BTC", name: "Bitcoin", image: "https://content-api.changenow.io/uploads/btc_1_527dc9ec3c.svg" },
         { title: "ETH", name: "Ethereum", image: "https://content-api.changenow.io/uploads/eth_f4ebb54ec0.svg" },
@@ -16,6 +16,9 @@ const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage }: { setTok
         { title: "USDC(ETH)", name: "USD Coin (Ethereum)", image: "https://content-api.changenow.io/uploads/usdcerc20_acd5759c8c.svg" },
         { title: "USDC(SOLANA)", name: "USD Coin (Solana)", image: "https://content-api.changenow.io/uploads/usdcsol_9415198300.svg" },
         { title: "USDC(TRX)", name: "USD Coin (Tron)", image: "https://content-api.changenow.io/uploads/usdctrc20_d13d6907e1.svg" },
+        { title: "USDT(ETH)", name: "Tether USD (Ethereum)", image: "https://content-api.changenow.io/uploads/usdterc20_5ae21618aa.svg" },
+        { title: "USDT(SOLANA)", name: "Tether USD (Solana)", image: "https://content-api.changenow.io/uploads/usdtsol_4f6a1c5208.svg" },
+        { title: "USDT(TRX)", name: "Tether USD (Tron)", image: "https://content-api.changenow.io/uploads/usdttrc20_87164a7b35.svg" },
 
     ]
     return (<>
@@ -31,7 +34,7 @@ const Modal = ({ setTokenStyle, style, setIsModalShow, setTokenImage }: { setTok
                 {tokens.map((token) => {
                     // For "Send" style, exclude "Sui" token
                     if (style === "Send" && token.title === "SUI") return null;
-
+                    if(style === "Get" && token.title === "USDC(TRX)") return null;
                     // For "Get" style, exclude "Matic" token
                     if (style === "Get" && token.title === "MATIC") return null;
 
