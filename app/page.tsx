@@ -89,7 +89,11 @@ export default function Home() {
   const handleTransaction = async () => {
     try {
       let transaction = await createExchangeTransaction(inputCurrency, outCurrency, inputAmount, address);
-      if (transaction.error) toast.error(transaction?.message);
+      console.log(transaction);
+      if (transaction.error) {
+        if(transaction.message) toast.error(transaction.message);
+        else toast.error('Transaction is not created.');
+      }
       else {
         let transactionStatus: any = await getTransactionStatus(transaction.id);
         if (transactionStatus.status === 'error') {
