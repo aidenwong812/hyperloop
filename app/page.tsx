@@ -89,32 +89,38 @@ export default function Home() {
   const handleTransaction = async () => {
     try {
       let transaction = await createExchangeTransaction(inputCurrency, outCurrency, inputAmount, address);
-      let transactionStatus: any = await getTransactionStatus(transaction.id);
-
-      if (transactionStatus.status === 'error') {
-        toast.error(transaction?.message);
-      } else {
-        toast.success('The transaction created.');
-        setTransactionInfo({
-          payinAddress: transaction.payinAddress,
-          payoutAddress: transaction.payoutAddress,
-          fromCurrency: transaction.fromCurrency,
-          toCurrency: transaction.toCurrency,
-          amount: transaction.amount,
-          directedAmount: transaction.directedAmount
-        });
-        const data = {
-          userId: userId,
-          transactionId: btoa(transaction.id).replace(/=+$/, ''),
-        };
-        axios.post("/api/transactions/confirm", { data })
-          .then((res: any) => { console.log(res); })
-          .catch((err: any) => { console.log(err) })
-        router.push("/confirm");
+      console.log(transaction);
+      if (transaction.error) {
+        if(transaction.message) toast.error(transaction.message);
+        else toast.error('Transaction is not created.');
       }
-
+      else {
+        let transactionStatus: any = await getTransactionStatus(transaction.id);
+        if (transactionStatus.status === 'error') {
+          toast.error(transaction?.message);
+        } else {
+          toast.success('The transaction created.');
+          setTransactionInfo({
+            payinAddress: transaction.payinAddress,
+            payoutAddress: transaction.payoutAddress,
+            fromCurrency: transaction.fromCurrency,
+            toCurrency: transaction.toCurrency,
+            amount: transaction.amount,
+            directedAmount: transaction.directedAmount
+          });
+          const data = {
+            userId: userId,
+            transactionId: btoa(transaction.id).replace(/=+$/, ''),
+          };
+          axios.post("/api/transactions/confirm", { data })
+            .then((res: any) => { console.log(res); })
+            .catch((err: any) => { console.log(err) })
+          router.push("/confirm");
+        }
+      }
     } catch (error: any) {
-      toast.error(error.response);
+      console.log(error);
+      toast.error(error);
     }
   };
 
@@ -146,7 +152,7 @@ export default function Home() {
         <article>Recipient Wallet</article>
         <input
           className="w-full rounded-md outline-none bg-transparent border-[1px] border-[#dde2ea] p-2"
-          placeholder="Enter the ETH payout address"
+          placeholder={`Enter the ${outCurrency} payout address`}
           onChange={(e) => setAddress(e.target.value)}
         />
       </div>
